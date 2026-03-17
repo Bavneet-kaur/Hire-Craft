@@ -1,0 +1,17 @@
+import {Router}  from "express";
+import {registerUser} from "../controllers/auth"
+
+/**
+ * * we can use 'Router()' function in this way
+import express from "express";
+const router = express.Router();
+*/
+
+const router = Router();
+/**
+ * @route POST  /api/auth/registerUser
+ * @description register a user
+ * @access {*}
+ */
+router.post("/register", registerUser)
+export default router;
