@@ -1,8 +1,8 @@
 import users from "../models/user";
+import jwt from "jsonwebtoken";
+
 import { Router, Request, Response} from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import strict from "node:assert/strict";
 
 const router = Router();
 
