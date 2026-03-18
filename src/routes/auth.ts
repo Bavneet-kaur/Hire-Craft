@@ -1,5 +1,5 @@
 import {Router}  from "express";
-import {registerUser} from "../controllers/auth"
+import {registerUser, loginUser} from "../controllers/auth"
 
 /**
  * * we can use 'Router()' function in this way
@@ -14,4 +14,11 @@ const router = Router();
  * @access {*}
  */
 router.post("/register", registerUser)
+/**
+ * @route POST  /api/auth/loginUser
+ * @description login user using email & password
+ * @access {*}
+ */
+router.post("/login", loginUser)
+
 export default router;
