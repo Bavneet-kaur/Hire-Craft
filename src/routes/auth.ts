@@ -1,5 +1,5 @@
 import {Router}  from "express";
-import {registerUser, loginUser} from "../controllers/auth"
+import {registerUser, loginUser, logoutUser} from "../controllers/auth"
 
 /**
  * * we can use 'Router()' function in this way
@@ -20,5 +20,12 @@ router.post("/register", registerUser)
  * @access {*}
  */
 router.post("/login", loginUser)
+
+/**
+ * @route GET  /api/auth/logoutUser
+ * @description clear token from user cookie & add token in blacklist
+ * @access {*}
+ */
+router.post("/logout", logoutUser )
 
 export default router;

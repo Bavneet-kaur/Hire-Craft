@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Router, Request, Response } from "express";
 import users from "../models/user";
-
+import blacklist from "../models/blacklist.model";
 
 const router = Router();
 
@@ -98,3 +98,28 @@ export const loginUser = async (req: Request, res: Response) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+/**
+ * @name logoutUser
+ * @description  expects the token from cookie
+ * @access {*} 
+ */
+export const logoutUser = async (req: Request, res: Response) => {
+    try {
+        const token = req.cookies.token;
+        if(!token){
+            return res.status(400).json({message: "No token found!"});
+        }
+        const decoded: any = jwt.decode(token);
+        await blacklist.create({
+            token,
+            expiresAt: new Date(decoded.exp * 1000),
+        });
+        res.clearCookie("token");
+        res.status(200).json({message: "Logged out successfully"});
+    }
+    catch (error: any) {
+        res.status(500).json({message: error.message});
+    }
+}
