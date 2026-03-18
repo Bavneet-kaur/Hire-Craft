@@ -107,19 +107,23 @@ export const loginUser = async (req: Request, res: Response) => {
  */
 export const logoutUser = async (req: Request, res: Response) => {
     try {
-        const token = req.cookies.token;
-        if(!token){
-            return res.status(400).json({message: "No token found!"});
+        // const token = req.cookies.token;
+        const token = req.headers.authorization?.split(" ")[1];
+        if (!token) {
+           return res.status(401).json({message: "Unauthorized: No token"});
         }
         const decoded: any = jwt.decode(token);
+        if (!decoded) {
+            return res.status(401).json({ message: "Invalid token" });
+        }
         await blacklist.create({
             token,
             expiresAt: new Date(decoded.exp * 1000),
         });
         res.clearCookie("token");
-        res.status(200).json({message: "Logged out successfully"});
+        res.status(200).json({ message: "Logged out successfully" });
     }
     catch (error: any) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
     }
 }
