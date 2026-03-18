@@ -51,7 +51,7 @@ export const registerUser = async (req: Request, res: Response) => {
                 name: newUser.name,
                 email: newUser.email,
             },
-            token
+            // token
         });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
@@ -87,6 +87,7 @@ export const loginUser = async (req: Request, res: Response) => {
             maxAge: 24 * 60 * 60 * 1000 // 1day
         });
         res.json({
+            message: "User logged in  successfully!",
             user: {
                 id: createdUser._id,
                 name: createdUser.name,
