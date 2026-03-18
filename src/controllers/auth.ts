@@ -4,8 +4,6 @@ import { Router, Request, Response } from "express";
 import users from "../models/user";
 import blacklist from "../models/blacklist.model";
 
-const router = Router();
-
 /**
  * @name registerUser
  * @description register a new user expects: name, email, password, timezone(automatic)
@@ -107,8 +105,8 @@ export const loginUser = async (req: Request, res: Response) => {
  */
 export const logoutUser = async (req: Request, res: Response) => {
     try {
-        // const token = req.cookies.token;
-        const token = req.headers.authorization?.split(" ")[1];
+        const token = req.cookies.token;
+        // const token = req.headers.authorization?.split(" ")[1];
         if (!token) {
            return res.status(401).json({message: "Unauthorized: No token"});
         }
@@ -126,4 +124,17 @@ export const logoutUser = async (req: Request, res: Response) => {
     catch (error: any) {
         res.status(500).json({ message: error.message });
     }
-}
+};
+
+/**
+ * @name getMeUser
+ * @description get the current logged user in details
+ * @access private
+ */
+
+export const getMeUser = (req: any, res: Response) => {
+  res.status(200).json({
+    message: "User fetched successfully",
+    user: req.user,
+  });
+};
