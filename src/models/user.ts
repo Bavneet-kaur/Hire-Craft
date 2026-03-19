@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: [true, 'Account already exists with this email!'],
-            lowercase: true,
+            // lowercase: true,
             trim: true,
         },
 
