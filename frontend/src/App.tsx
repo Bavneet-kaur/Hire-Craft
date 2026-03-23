@@ -1,13 +1,14 @@
 "use client";
 // import React from 'react'
 import './index.scss';
-
+import { RouterProvider } from 'react-router';
+import {router} from "./routes/app.routes"
 function App() {
 
   return (
     <>
     <div>
-      <p className='text-primary-color'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, nihil.</p>
+      <RouterProvider router = {router} />
     </div>
     </>
   )
