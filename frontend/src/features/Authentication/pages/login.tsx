@@ -1,5 +1,5 @@
+import "../auth.form.scss"
 import { Link } from "react-router";
-import "../styles/auth.form.scss";
 import { FcGoogle } from "react-icons/fc";
 function Login() {
     const handleSubmit = (e: any) => {
