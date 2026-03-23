@@ -1,4 +1,4 @@
-import "../styles/auth.form.scss";
+import "../auth.form.scss"
 import { FcGoogle } from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router";
