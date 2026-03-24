@@ -2,19 +2,22 @@ import { useContext } from "react";
 import { AuthContext } from "./auth.context";
 import { loginUser, registerUser, logoutUser, getMe } from "./auth.api";
 
-interface Input {
+interface LoginInput {
+    email: string;
+    password: string;
+}
+interface RegisterInput {
     name: string;
     email: string;
     password: string;
 }
-
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
         throw new Error("useAuth must be used inside AuthProvider");
     }
     const { user, setUser, loading, setLoading } = context;
-    const handleRegister = async ({ name, email, password }: Input) => {
+    const handleRegister = async ({ name, email, password }: RegisterInput) => {
         try {
             setLoading(true);
             const data = await registerUser({ name, email, password });
@@ -27,7 +30,7 @@ export const useAuth = () => {
         }
     };
 
-    const handleLogin = async ({ email, password }: Input) => {
+    const handleLogin = async ({ email, password }: LoginInput) => {
         try {
             setLoading(true);
             const data = await loginUser({ email, password });
