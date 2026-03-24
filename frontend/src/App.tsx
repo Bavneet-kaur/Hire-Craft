@@ -1,19 +1,15 @@
-"use client";
-// import React from 'react'
 import './index.scss';
 import { RouterProvider } from 'react-router';
 import { router } from "./routes/app.routes"
-import Loader from './components/loader';
+import { AuthProvider } from './features/Authentication/auth.context';
+
 function App() {
 
   return (
     <>
-      <div>
+      <AuthProvider>
         <RouterProvider router={router} />
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "100px", height:"screen" }}>
-          <Loader />
-        </div>
-      </div>
+      </AuthProvider>
     </>
   )
 }

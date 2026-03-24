@@ -1,9 +1,24 @@
 import "../auth.form.scss"
+import { useState } from 'react'
 import { Link } from "react-router";
 import { FcGoogle } from "react-icons/fc";
+import { useAuth } from "../useAuth";
+import Loader from "../../../components/loader";
+
 function Login() {
+    const { loading, handleLogin } = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const handleSubmit = (e: any) => {
         e.preventDefault();
+        handleLogin({ email, password })
+    }
+    if (loading) {
+        return (
+            <main>
+                <Loader />
+            </main>
+        )
     }
     return (
         <>
@@ -21,11 +36,11 @@ function Login() {
                     <form className="form" onSubmit={handleSubmit}>
                         <div className="input-group">
                             <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="john@example.com" />
+                            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@example.com" />
                         </div>
                         <div className="input-group">
                             <label htmlFor="password">Password</label>
-                            <input type="password" id="password" name="password" />
+                            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         <div className="row">
                             <label className="remember">
@@ -39,7 +54,7 @@ function Login() {
                         </button>
                     </form>
                     <p className="bottom-text">
-                        Don’t have an account? <Link to="/register" style={{textDecoration:"none" , color:"#813599"}}>Sign up</Link>
+                        Don’t have an account? <Link to="/register" style={{ textDecoration: "none", color: "#813599" }}>Sign up</Link>
                     </p>
                 </div>
             </main>
