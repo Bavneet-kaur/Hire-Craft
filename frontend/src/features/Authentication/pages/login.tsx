@@ -1,6 +1,6 @@
 import "../auth.form.scss"
 import { useState } from 'react'
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "../useAuth";
 import Loader from "../../../components/loader";
@@ -9,9 +9,11 @@ function Login() {
     const { loading, handleLogin } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const handleSubmit = (e: any) => {
+    const navigate = useNavigate();
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
-        handleLogin({ email, password })
+        await handleLogin({ email, password });
+        navigate('/');
     }
     if (loading) {
         return (
