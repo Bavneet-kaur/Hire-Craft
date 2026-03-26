@@ -1,10 +1,27 @@
+import { useState } from "react";
 import "../auth.form.scss"
 import { FcGoogle } from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../useAuth";
+import Loader from "../../../components/loader";
 function Register() {
-    const handleSubmit = (e: any) => {
+    const { loading, handleRegister } = useAuth();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
+        await handleRegister({ name, email, password });
+        navigate('/');
+    }
+    if (loading) {
+        return (
+            <main>
+                <Loader />
+            </main>
+        )
     }
     return (
         <>
@@ -22,15 +39,15 @@ function Register() {
                     <form className="form" onSubmit={handleSubmit}>
                         <div className="input-group">
                             <label htmlFor="name">Name</label>
-                            <input type="text" id="name" name="name" placeholder="John Doe" />
+                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" name="name" placeholder="John Doe" />
                         </div>
                         <div className="input-group">
                             <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="john@example.com" />
+                            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@example.com" />
                         </div>
                         <div className="input-group">
                             <label htmlFor="password">Password</label>
-                            <input type="password" id="password" name="password" />
+                            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         <div className="password-rules">
                             <div className="rule">
@@ -49,7 +66,7 @@ function Register() {
                         </button>
                     </form>
                     <p className="bottom-text">
-                        Already have an account ?<Link to="/login" style={{textDecoration:"none" , color:"#813599"}}> Log in</Link>
+                        Already have an account ?<Link to="/login" style={{ textDecoration: "none", color: "#813599" }}> Log in</Link>
                     </p>
                 </div>
             </main>
