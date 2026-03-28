@@ -3,7 +3,9 @@ import connectDB from "./config/db";
 import authRouter from "./routes/auth";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+
 connectDB();
+
 
 const app = express();
 
