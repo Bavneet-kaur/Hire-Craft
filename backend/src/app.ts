@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./config/db";
 import authRouter from "./routes/auth";
+import reportRouter from "./routes/report.routes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -18,4 +19,5 @@ app.use(
     })
 );
 app.use("/api/auth", authRouter);
+app.use("/api/report", reportRouter);
 export default app;
