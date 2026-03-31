@@ -118,11 +118,11 @@ export const generateReport = async ({
     `;
 
     const response = await AI.models.generateContent({
-        model: "gemini-2.5-flash-preview-04-17",
+        model: "gemini-3-flash-preview",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
-            responseJsonSchema: reportJsonSchema,
+            responseSchema: reportJsonSchema,
         },
     });
 
