@@ -1,33 +1,34 @@
-// import{ useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from "react-router"
 import "../styles/home.style.scss"
 import { FaCloudUploadAlt, FaSuitcase, FaUserAlt, FaInfoCircle } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi2";
-// import { useInterview } from '../hooks/useInterview.js'
-// import { useNavigate } from 'react-router'
+import { useReport } from "../hook/useReport";
+import { useNavigate } from 'react-router'
+import Loader from '../../../components/loader';
 
 const Home = () => {
 
-    // const { loading, generateReport,reports } = useInterview()
-    // const [ jobDescription, setJobDescription ] = useState("")
-    // const [ selfDescription, setSelfDescription ] = useState("")
-    // const resumeInputRef = useRef()
+    const { loading, createReport, reports } = useReport()
+    const [jobDescription, setJobDescription] = useState("")
+    const [selfDescription, setSelfDescription] = useState("")
+    const resumeInputRef = useRef<HTMLInputElement>(null)
+    const navigate = useNavigate()
+    const handleGenerateReport = async () => {
+        const resumeFile = resumeInputRef.current?.files?.[0]
+        const data = await createReport({ jobDescription, selfDescription, resumeFile })
+        if (data) {
+            navigate(`/report/${data._id}`)
+        }
+    }
 
-    // const navigate = useNavigate()
-
-    // const handleGenerateReport = async () => {
-    //     // const resumeFile = resumeInputRef.current.files[ 0 ]
-    //     // const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-    //     navigate(`/interview/${data._id}`)
-    // }
-
-    // if (loading) {
-    //     return (
-    //         <main className='loading-screen'>
-    //             <h1>Loading your interview plan...</h1>
-    //         </main>
-    //     )
-    // }
+    if (loading) {
+        return (
+            <main className='loading-screen'>
+                <Loader />
+            </main>
+        )
+    }
 
     return (
         <div className='home-page'>
@@ -39,8 +40,6 @@ const Home = () => {
             {/* Main Card */}
             <div className='interview-card'>
                 <div className='interview-card__body'>
-
-                    {/* Left Panel - Job Description */}
                     <div className='panel panel--left'>
                         <div className='panel__header'>
                             <span className='panel__icon'><FaSuitcase /></span>
@@ -48,7 +47,7 @@ const Home = () => {
                             <span className='badge badge--required'>Required</span>
                         </div>
                         <textarea
-                            // onChange={(e) => { setJobDescription(e.target.value) }}
+                            onChange={(e) => { setJobDescription(e.target.value) }}
                             className='panel__textarea'
                             placeholder={`Paste the full job description here...\ne.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'`}
                             maxLength={5000}
@@ -77,7 +76,7 @@ const Home = () => {
                                 <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
                                 <p className='dropzone__subtitle'>PDF or DOCX (Max 3MB)</p>
                                 <input
-                                    // ref={resumeInputRef} 
+                                    ref={resumeInputRef}
                                     hidden type='file' id='resume' name='resume' accept='.pdf,.docx' />
                             </label>
                         </div>
@@ -89,7 +88,7 @@ const Home = () => {
                         <div className='self-description'>
                             <label className='section-label' htmlFor='selfDescription'>Quick Self-Description</label>
                             <textarea
-                                // onChange={(e) => { setSelfDescription(e.target.value) }}
+                                onChange={(e) => { setSelfDescription(e.target.value) }}
                                 id='selfDescription'
                                 name='selfDescription'
                                 className='panel__textarea panel__textarea--short'
@@ -109,7 +108,7 @@ const Home = () => {
                 <div className='interview-card__footer'>
                     <span className='footer-info'>AI-Powered Strategy Generation &bull; Approx 30s</span>
                     <button
-                        // onClick={handleGenerateReport}
+                        onClick={handleGenerateReport}
                         className='generate-btn'>
                         <HiSparkles style={{ width: "20px", height: "20px", paddingTop: "2px" }} /> Generate My Interview Strategy
                     </button>
@@ -118,12 +117,12 @@ const Home = () => {
             </div>
 
             {/* Recent Reports List */}
-            {/* {reports.length > 0 && (
+            {reports.length > 0 && (
                 <section className='recent-reports'>
                     <h2>My Recent Interview Plans</h2>
                     <ul className='reports-list'>
-                        {reports.map(report => (
-                            <li key={report._id} className='report-item' onClick={() => navigate(`/interview/${report._id}`)}>
+                        {reports.map((report: any) => (
+                            <li key={report._id} className='report-item' onClick={() => navigate(`/report/${report._id}`)}>
                                 <h3>{report.title || 'Untitled Position'}</h3>
                                 <p className='report-meta'>Generated on {new Date(report.createdAt).toLocaleDateString()}</p>
                                 <p className={`match-score ${report.matchScore >= 80 ? 'score--high' : report.matchScore >= 60 ? 'score--mid' : 'score--low'}`}>Match Score: {report.matchScore}%</p>
@@ -131,7 +130,7 @@ const Home = () => {
                         ))}
                     </ul>
                 </section>
-            )} */}
+            )}
 
             {/* Page Footer */}
             <footer className='page-footer'>

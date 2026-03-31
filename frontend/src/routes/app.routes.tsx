@@ -6,8 +6,12 @@ import Protected from "../features/Authentication/protected";
 
 export const router = createBrowserRouter([
   {
+    path: "/report/:reportId",
+    element: <Protected><h1>hello report page</h1></Protected>,
+  },
+  {
     path: "/",
-    element: <Protected><Home/></Protected>
+    element: <Protected><Home /></Protected>
   },
   {
     path: "/login",
