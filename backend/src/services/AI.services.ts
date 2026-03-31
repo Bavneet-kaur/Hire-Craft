@@ -101,9 +101,24 @@ const reportJsonSchema = {
 
 export type ReportType = z.infer<typeof reportSchema>;
 
-export const generateReport = async ({ prompt }: { prompt: string }): Promise<ReportType> => {
+export const generateReport = async ({
+    resume,
+    selfDescription,
+    jobDescription
+}: {
+    resume: string;
+    selfDescription: string;
+    jobDescription: string;
+}): Promise<ReportType> => {
+
+    const prompt = `Generate an interview preparation report for a candidate with the following details:
+        Resume: ${resume}
+        Self Description: ${selfDescription}
+        Job Description: ${jobDescription}
+    `;
+
     const response = await AI.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-2.5-flash-preview-04-17",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
