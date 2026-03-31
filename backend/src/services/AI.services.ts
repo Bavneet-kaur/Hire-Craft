@@ -122,7 +122,7 @@ export const generateReport = async ({
         contents: prompt,
         config: {
             responseMimeType: "application/json",
-            responseJsonSchema: reportJsonSchema,
+            responseSchema: reportJsonSchema,
         },
     });
 
