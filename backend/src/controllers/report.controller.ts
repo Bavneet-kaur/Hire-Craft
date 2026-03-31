@@ -1,9 +1,8 @@
 import * as pdfParseModule from "pdf-parse";
 import { generateReport, generateResumePdf } from "../services/ai.services";
 import aiReportModel from "../models/ai.report.model";
-import users from "../models/user";
 import { Request, Response } from "express";
-import { string } from "zod";
+
 
 const pdfParse = (pdfParseModule as any).default ?? pdfParseModule;
 type AuthRequest = Request & { user?: any };
