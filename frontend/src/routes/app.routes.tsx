@@ -1,13 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../features/Authentication/pages/login";
 import Register from "../features/Authentication/pages/register";
+import Report from "../features/AI/pages/report";
 import Home from "../features/AI/pages/home";
 import Protected from "../features/Authentication/protected";
 
 export const router = createBrowserRouter([
   {
     path: "/report/:reportId",
-    element: <Protected><h1>hello report page</h1></Protected>,
+    element: <Protected><Report/></Protected>,
   },
   {
     path: "/",
