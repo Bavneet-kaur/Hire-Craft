@@ -1,16 +1,16 @@
-import * as pdfParseModule from "pdf-parse";
+import pdfParse from "pdf-parse";
 import { generateReport, generateResumePdf } from "../services/ai.services";
 import aiReportModel from "../models/ai.report.model";
 import { Request, Response } from "express";
 
 
-const pdfParse = (pdfParseModule as any).default ?? pdfParseModule;
+const pdfParser = (pdfParse as any).default ?? pdfParse;
 type AuthRequest = Request & { user?: any };
 /**
  * @description Controller to generate interview report based on user self description, resume and job description.
  */
 export async function generateReportController(req: AuthRequest, res: Response) {
-    const resumeContent = await pdfParse(req.file!.buffer);
+    const resumeContent = await pdfParser(req.file!.buffer);
     const { selfDescription, jobDescription } = req.body;
 
     const reportByAi = await generateReport({
